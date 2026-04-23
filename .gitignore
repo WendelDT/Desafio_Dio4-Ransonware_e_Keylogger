@@ -1,0 +1,22 @@
+# Arquivos de Log do Keylogger (O mais importante!)
+log.txt
+*.log
+
+# Credenciais e Variáveis de Ambiente
+.env
+auth.json
+config.py  # Se você decidir mover as senhas para um arquivo separado
+
+# Arquivos temporários do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pastas de ambiente virtual (se você usar)
+venv/
+env/
+.venv/
+
+# Arquivos do Sistema
+.DS_Store
+Thumbs.db
