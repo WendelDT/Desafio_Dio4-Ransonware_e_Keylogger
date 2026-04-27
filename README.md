@@ -1,71 +1,70 @@
-Entendendo o Desafio
-Chegou a hora de colocar em prática todo o conhecimento que você absorveu ao longo das aulas! 🚀
-Este projeto é a sua oportunidade de experimentar, compreender e documentar o funcionamento de malwares simulados com Python, em um ambiente 100% controlado e com fins educacionais.
+# Documentação Técnica: Simulação de Keylogger e Exfiltração via C2
 
-A ideia é que você implemente — ou registre em detalhes — os exemplos apresentados no curso: Ransomware e Keylogger.
-Esses exercícios vão mostrar, na prática, como essas ameaças digitais funcionam, como capturam ou sequestram dados, e principalmente como podemos detectar, mitigar e nos proteger delas no mundo real.
+## 1. Escopo do Projeto
+Este projeto documenta o desenvolvimento e a implementação de um **keylogger** para fins educacionais, simulando um cenário real de ataque e exfiltração de dados em um ambiente controlado.
 
-📌 Descrição do Desafio
-Você deverá implementar, documentar e compartilhar um projeto prático utilizando Python, simulando o comportamento de malwares em um ambiente seguro.
+* **Objetivo:** Capturar inputs de teclado e exfiltrar os dados para um servidor remoto via protocolo HTTP.
+* **Diferencial:** Implementação de um servidor de Comando e Controle (C2) centralizado em substituição ao envio tradicional por e-mail.
 
-Ransomware Simulado
+## 2. Topologia do Laboratório
+O ambiente foi construído utilizando a plataforma **PNETLab**, replicando a infraestrutura da empresa fictícia "Tabajiros".
 
-Criar arquivos de teste;
-Implementar um script que criptografa e descriptografa;
-Gerar mensagem de “resgate”.
-Keylogger Simulado
+* **Gateway/Firewall:** MikroTik RouterOS.
+* **Networking:** Switch L2 Cisco.
+* **Endpoints Alvos:** 2x Windows 10 e 1x Windows Server 2008.
+* **Infraestrutura de Ataque:** * **Kali Linux:** Utilizado para desenvolvimento e entrega do payload.
+    * **Debian 12 (C2 Server):** Host do servidor de recebimento de dados.
 
-Programar captura de teclas em arquivo .txt;
-Torná-lo mais furtivo;
-Implementar envio automático por e-mail.
-Reflexão sobre Defesa
+![Topologia da Rede](images/labfoto.png)
 
-Documentar medidas de prevenção e defesa:
-Antivírus
-Firewall
-Sandboxing
-Conscientização do usuário
-⚠️ Atenção: Este desafio é flexível!
-Você pode implementar os exemplos completos (Ransomware + Keylogger), ou apenas documentar em detalhes seus estudos, reflexões e aprendizados.
-Também pode adaptar os códigos, criar novos cenários ou melhorar as soluções.
-O mais importante é demonstrar seu entendimento e compartilhar sua jornada de aprendizado!
+## 3. Arquitetura do Servidor C2 (Command & Control)
+O servidor C2 atua como o *listener* do ataque.
+* **Tecnologias:** Desenvolvido em **Python** com o micro-framework **Flask**.
+* **Deployment:** Implementado via **Docker Compose**, garantindo isolamento e facilidade de replicação.
+* **Exfiltração:** O servidor processa requisições `POST` contendo os logs de teclas capturadas, simulando tráfego HTTP legítimo para evitar detecção básica por firewalls.
 
-🎯 Objetivos de Aprendizagem
-Ao concluir este desafio, você será capaz de:
+## 4. Desenvolvimento e Vetores de Infecção
+O artefato malicioso (Keylogger) foi compilado como um executável independente (`.exe`) através do **PyInstaller**.
 
-Compreender o funcionamento prático de Ransomware e Keylogger;
-Identificar como esses malwares exploram vulnerabilidades e brechas humanas;
-Programar scripts simples em Python simulando ataques reais em ambiente controlado;
-Refletir sobre estratégias de defesa e prevenção contra malwares;
-Documentar seus experimentos e utilizar o GitHub como portfólio técnico.
-📦 Entrega do Desafio
-Para concluir este desafio, você deverá:
+### Possíveis Vetores de Entrega (Simulados):
+* **Engenharia Social:** Phishing via e-mail com técnicas de *File Binding* (fusão do executável com PDFs ou imagens).
+* **Exploração de Vulnerabilidades:** Execução remota via **Meterpreter** após comprometimento inicial do host.
 
-Assistir todas as aulas
+## 5. Análise de Execução e Detecção
+Nesta fase, validamos o comportamento do artefato no endpoint "Vendas".
 
-Não pule nenhuma etapa! As práticas contêm informações essenciais para o sucesso do seu projeto.
-Criar um repositório público no GitHub contendo:
+![Execução do Binário](images/keylogger1.png)
 
-Um arquivo README.md detalhado;
-Scripts e arquivos criados durante os testes;
-Opcionalmente, capturas de tela organizadas em uma pasta /images.
-Enviar o link do seu repositório
+### Perspectiva de Defesa (Blue Team):
+* **Processos:** Monitoramento do *Task Manager* em busca de processos suspeitos ou masquerading (nomes de processos legítimos).
+* **Rede:** Identificação de persistência através de conexões ativas com o comando `netstat -a`.
+* **Firewall:** Monitoramento da tabela de conexões no MikroTik para identificar comunicações anômalas na porta 80/443 destinadas a IPs externos não catalogados.
 
-Inclua uma breve descrição clicando no botão “Entregar Projeto”.
-📚 Recursos Úteis
-🖥️ Slides
-Simulando um Malware de Captura de Dados Simples em Python e Aprendendo a se Proteger
-💻 Códigos
-(Adicionar conforme necessário)
+![Monitoramento de Processos](images/keylogger2.png)
 
-📖 Documentações Oficiais
-Python – Documentação Oficial
-Cryptography (Fernet)
-pynput – Biblioteca de Captura de Teclado
-smtplib – Envio de E-mails com Python
-🔗 Materiais Complementares sobre GitHub
-GitHub Quick Start
-GitBook: Formação GitHub Certification
-Documentação do GitHub
-GitHub Markdown
-🚀 Bons estudos!
+## 6. Resultados e Logs de Captura
+O teste foi validado através da inserção de strings aleatórias no host alvo, simulando a captura de credenciais ou comunicações sensíveis.
+
+![Simulação de Input](images/keylogger4.png)
+
+### Verificação de Recebimento (C2):
+O servidor C2 registrou com sucesso as requisições provenientes do IP do host "Vendas", armazenando o conteúdo em formato `.txt`.
+
+![Logs de Recebimento](images/keylogger3.png)
+![Visualização do Log - Servidor](images/keylogger6.png)
+
+## 7. Arquivos
+Em /keylogger se encontram os seguintes arquivos disponiveis:
+* **keyloger source**: código fonte compactado (ideal para ser baixado no Windows, visto que o antivirus por criar alertas e excluir o código).
+* **keylogger**: código fonte. 
+* **keylogger_32**: arquivo .exe. compilado para rodar em windows 32bits.
+
+## 8. Conclusão e Mitigação
+Compreendido o funcionamento do keylogger, um malware que captura as informações digitadas no teclado e as envia para um servidor ou email remoto, e como isso pode ser danoso para uma empresa, principalmente se capturar logins e senhas sensiveis.
+
+A maioria dos malwares exploram a engenharia social, e as falhas humanas. Para que uma empresa tenha boa segurança não basta apenas o time de T.I ter um bom treinamento, é necessário treinamentos constantes também com outros setores da empresa, desde a secretária que possa abrir um email até o diretor, ambos podem expor a empresa a vulnerabilidades.
+
+**Recomendações de Segurança:**
+1.  **Hardening de Endpoint:** Restrição de execução de binários não assinados.
+2.  **Segurança de Rede:** Implementação de inspeção SSL/TLS para identificar tráfego C2 mascarado como HTTP.
+3.  **Treinamento Anti-Phishing:** Fortalecimento da cultura de segurança para mitigar vetores de engenharia social.
