@@ -62,16 +62,26 @@ O servidor C2 registrou com sucesso as requisições provenientes do IP do host 
 ## 7. Resultados e Logs de Captura
 Podemos abrir os logs de captuira direto no C2 ou baixa-los abri-los utilizando o notepad.
 
+Abrindo no servidor com o Nano
 ![Visualização do Log - Servidor](images/keylogger6.png)
+
+Baixando e abrindo no windows com o notepad
 ![Visualização do Log - Servidor](images/keylogger7.png)
 
-## 8. Arquivos
+## 10. Sugestões de melhoras
+Como o laborátorio é feito para testes, não houve preocupação deixar o keylogger totalmente oculto, visto que parte da sua visibilidade servia também para diagnostico do laboratório, mas como sugestão, certas melhorias podem ser aplicadas:
+* Melhora na ocultabilidade no taskmaneger.
+* Melhora na formatação do texto recebido, de forma a ficar com melhor clareza.
+* Inicialização automática no windows, escondendo o keylloger me um diretório oculto.
+* Mudança de nome para o nome de um processo do windows.
+
+## 9. Arquivos
 Em /keylogger se encontram os seguintes arquivos disponiveis:
 * **keyloger source**: código fonte compactado (ideal para ser baixado no Windows, visto que o antivirus por criar alertas e excluir o código).
 * **keylogger**: código fonte. 
 * **keylogger_32**: arquivo .exe. compilado para rodar em windows 32bits.
 
-## 9. Conclusão e Mitigação
+## 10. Conclusão e Mitigação
 Compreendido o funcionamento do keylogger, um malware que captura as informações digitadas no teclado e as envia para um servidor ou email remoto, e como isso pode ser danoso para uma empresa, principalmente se capturar logins e senhas sensiveis.
 
 A maioria dos malwares começam explorando engenharia social e falhas humanas. Para que uma empresa tenha boa segurança não basta apenas o time de T.I ter um bom treinamento, é necessário também treinamentos constantes com outros setores da empresa, desde a secretária, que pode abrir um email com arquivo mailicioso, até o diretor, pois ambos podem expor a empresa a vulnerabilidades.
