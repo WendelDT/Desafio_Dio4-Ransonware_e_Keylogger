@@ -1,0 +1,16 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Copia os requisitos e instala o Flask
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia a aplicação
+COPY app.py .
+
+# Expõe a porta 80
+EXPOSE 80
+
+# Roda o servidor
+CMD ["python", "app.py"]

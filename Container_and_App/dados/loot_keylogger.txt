@@ -1,0 +1,6 @@
+[2026-04-27 02:30:53] IP: 192.168.100.199 - Dados: {'keyboard_data': 'taskmgr\n', 'machine_name': 'VENDAS'}
+[2026-04-27 02:32:53] IP: 192.168.100.199 - Dados: {'keyboard_data': 'cmd\nipconfig\neditando arquivos do se', 'machine_name': 'VENDAS'}
+[2026-04-27 02:33:54] IP: 192.168.100.199 - Dados: {'keyboard_data': 'tor de vendas\nesse arquivo pode ser uma planilha, como: uma lista de clientes; produtos; enderecos', 'machine_name': 'VENDAS'}
+[2026-04-27 02:34:54] IP: 192.168.100.199 - Dados: {'keyboard_data': '\ne possveis compras.\ne um arqvuivo de conteudo valioso para concorrentes e pode ser alvo de um keylogge.\nalem disso pode ser ', 'machine_name': 'VENDAS'}
+[2026-04-27 02:35:54] IP: 192.168.100.199 - Dados: {'keyboard_data': 'util capturar conversas de vendedores com o cliente, podendo assim,\ncomo concorrente, oferecer um preco um pouco abaixo, fechando negocio e aproveitando\na informacao privilegiada.\n\n', 'machine_name': 'VENDAS'}
+[2026-04-27 02:36:54] IP: 192.168.100.199 - Dados: {'keyboard_data': 'taskmgr', 'machine_name': 'VENDAS'}
