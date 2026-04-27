@@ -14,8 +14,15 @@ __pycache__/
 
 # Pastas de ambiente virtual (se você usar)
 venv/
+venv32/
 env/
 .venv/
+
+# Pastas de compilação 
+build/
+dist/
+*.spec
+
 
 # Arquivos do Sistema
 .DS_Store

