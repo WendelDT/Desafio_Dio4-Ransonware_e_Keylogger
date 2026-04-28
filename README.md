@@ -40,27 +40,35 @@ Tanto o ransomware quanto o script de descriptografia (decript) foram escritos e
 Os testes de funcionamento foram realizados utilizando arquivos de texto. 
 Na imagem abaixo, podemos ver o executável do ransomware e um arquivo de testes aberto:
 
-![Executável e arquivo de teste](/images/ransonware1.png)
+<div align="center">
+  <img src="/images/ransonware1.png" width="800px" alt="Executável e arquivo de teste" />
+</div>
 
 ### 1.1.2 Processo de Criptografia
 O malware funciona criando uma chave de criptografia no mesmo diretório em que é executado. Em seguida, ele percorre todo o diretório em busca de arquivos e criptografa todos os documentos encontrados (exceto a própria chave, o executável do ransomware e o decript).
 
 Na imagem a seguir, podemos ver a chave gerada e o arquivo de texto que agora se encontra criptografado:
 
-![Chave e arquivo criptografado](/images/ransonware2.png)
+<div align="center">
+  <img src="/images/ransonware2.png" width="800px" alt="Chave e arquivo criptografado" />
+</div>
 
 Como parte da simulação, o script também gera e exibe um arquivo de resgate no diretório comprometido:
 
-![Mensagem de Resgate](/images/ransonware3.png)
+<div align="center">
+  <img src="/images/ransonware3.png" width="800px" alt="Mensagem de Resgate" />
+</div>
 
 ### 1.1.3 Processo de Descriptografia
 Ao executar o programa `Decript`, ele faz o caminho inverso. O script percorre o diretório em busca dos arquivos afetados e realiza a descriptografia, restaurando o acesso aos dados originais.
 
-![Processo de Descriptografia](/images/ransonware4.png)
+<div align="center">
+  <img src="/images/ransonware4.png" width="800px" alt="Processo de Descriptografia" />
+</div>
 
 ## 1.2 Táticas de Defesa e Prevenção
 
-Para mitigar e nos proteger dessas ameaças no mundo real, diversas medidas de segurança podem ser adotadas em conjunto:
+Para mitigar e nos proteger dessas ameaças no mundo real, diversas medidas de segurança devem ser adotadas em conjunto:
 
 * **Antivírus:** Antivírus atuais têm proteção robusta contra ransomware, ajudando a bloquear a execução de binários maliciosos.
 * **Backups e Snapshots:** Manter snapshots e rotinas de backup em dia é uma prática básica e essencial, que funciona perfeitamente caso os dados originais sejam perdidos e não tenham sido exfiltrados.
@@ -93,7 +101,9 @@ O ambiente foi construído utilizando a plataforma **PNETLab**, replicando a inf
 * **Infraestrutura de Ataque:** * **Kali Linux:** Utilizado para desenvolvimento e entrega do payload.
     * **Debian 12 (C2 Server):** Host do servidor de recebimento de dados.
 
-![Topologia da Rede](images/labfoto.png)
+<div align="center">
+  <img src="images/labfoto.png" width="800px" alt="Topologia da Rede" />
+</div>
 
 ## 2.3 Arquitetura do Servidor C2 (Command & Control)
 Ao invés de enviá-las para uma conta de e-mail, o keylogger as envia para um **servidor C2 (command-and-control)**. Para a simulação, este está localizado no próprio laboratório, mas poderia ser uma **EC2** ou qualquer outra **VPS** escondida atrás de um IP da Cloudflare ou uma VPN.
@@ -116,34 +126,49 @@ Nesta fase, validamos o comportamento do artefato no endpoint "Vendas".
 
 Depois de executado podemos vê-lo rodando no Task Manager. Keyloggers mais profissionais e com boa ocultabilidade escondem seu nome ou o trocam para o nome de outro programa conhecido. Uma maneira de diagnosticar um Keylogger é verificando as conexões abertas do dispositivo, o que pode ser feito com o comando `netstat -a` ou olhando a tabela *firewall > connections* no MikroTik. Abertura de portas de SMTP ou conexões suspeitas denunciam o keylogger; como este envia informações via POST HTTP, pode ser confundido com um navegador comum.
 
-![Execução do Binário](images/keylogger1.png)
+<div align="center">
+  <img src="images/keylogger1.png" width="800px" alt="Execução do Binário" />
+</div>
 
 ### Perspectiva de Defesa (Blue Team):
 * **Processos:** Monitoramento do *Task Manager* em busca de processos suspeitos ou masquerading (nomes de processos legítimos).
 * **Rede:** Identificação de persistência através de conexões ativas com o comando `netstat -a`.
 * **Firewall:** Monitoramento da tabela de conexões no MikroTik para identificar comunicações anômalas na porta 80/443 destinadas a IPs externos não catalogados.
 
-![Monitoramento de Processos](images/keylogger2.png)
+<div align="center">
+  <img src="images/keylogger2.png" width="800px" alt="Execução do Binário" />
+</div>
 
 ## 2.6 Simulando entradas do usuário
 Feito um teste digitando aleatoriamente no bloco de notas, simulando a digitação do usuário.
 
-![Simulação de Input](images/keylogger4.png)
+<div align="center">
+  <img src="images/keylogger4.png" width="800px" alt="Simulação de Input" />
+</div>
 
 ### Verificação de Recebimento (C2):
 O servidor C2 registrou com sucesso as requisições provenientes do IP do host "Vendas", armazenando o conteúdo em formato `.txt`.
 
-![Logs de Recebimento](images/keylogger3.png)
-![Recebimento do Log - Servidor](images/keylogger5.png)
+<div align="center">
+  <img src="images/keylogger3.png" width="600px" alt="Logs de Recebimento" />
+  <br>
+  <img src="images/keylogger5.png" width="600px" alt="Recebimento do Log - Servidor" />
+</div>
 
 ## 2.7 Resultados e Logs de Captura
 Podemos abrir os logs de captura direto no C2 ou baixá-los e abri-los utilizando o Notepad.
 
 Abrindo no servidor com o Nano:
-![Visualização do Log - Servidor](images/keylogger6.png)
+
+<div align="center">
+  <img src="images/keylogger6.png" width="600px" alt="Simulação de Input" />
+</div>
 
 Baixando e abrindo no Windows com o Notepad:
-![Visualização do Log - Servidor](images/keylogger7.png)
+
+<div align="center">
+  <img src="images/keylogger4.png" width="600px" alt="Simulação de Input" />
+</div>
 
 ## 2.8 Sugestões de melhoras
 Como o laboratório é feito para testes, não houve preocupação em deixar o keylogger totalmente oculto. Sugestões de melhorias que podem ser aplicadas:
