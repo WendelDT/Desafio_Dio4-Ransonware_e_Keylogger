@@ -1,3 +1,52 @@
+# Ransomware Educacional Simulado
+
+Este projeto prático foi desenvolvido em um ambiente 100% controlado e com fins educacionais. O ransomware foi criado somente para ser utilizado em testes simulados e não tem a intenção de ser utilizado para crimes.
+
+O desafio propõe a criação de um ransomware, a execução de testes de criptografia e descriptografia, e a geração de uma mensagem de resgate.
+
+## Simulação e Funcionamento
+Tanto o ransomware quanto o script de descriptografia (decript) foram escritos em Python e, posteriormente, transformados em executáveis utilizando a ferramenta `Pyinstaller`.
+
+1.  **Ransomware:** Script de criptografia e geração de nota de resgate.
+2.  **Decryptor:** Script de recuperação de dados.
+
+### 1. Ambiente de Teste
+Os testes de funcionamento foram realizados utilizando arquivos de texto. 
+Na imagem abaixo, podemos ver o executável do ransomware e um arquivo de testes aberto:
+
+![Executável e arquivo de teste](/images/ransonware1.png)
+
+### 2. Processo de Criptografia
+O malware funciona criando uma chave de criptografia no mesmo diretório em que é executado. Em seguida, ele percorre todo o diretório em busca de arquivos e criptografa todos os documentos encontrados (exceto a própria chave, o executável do ransomware e o decript).
+
+Na imagem a seguir, podemos ver a chave gerada e o arquivo de texto que agora se encontra criptografado:
+
+![Chave e arquivo criptografado](/images/ransonware2.png)
+
+Como parte da simulação, o script também gera e exibe um arquivo de resgate no diretório comprometido:
+
+![Mensagem de Resgate](/images/ransonware3.png)
+
+### 3. Processo de Descriptografia
+Ao executar o programa `Decript`, ele faz o caminho inverso. O script percorre o diretório em busca dos arquivos afetados e realiza a descriptografia, restaurando o acesso aos dados originais.
+
+![Processo de Descriptografia](/images/ransonware4.png)
+
+## Táticas de Defesa e Prevenção
+
+Para mitigar e nos proteger dessas ameaças no mundo real, diversas medidas de segurança devem ser adotadas em conjunto:
+
+* **Antivírus:** Antivírus atuais têm proteção robusta contra ransomware, ajudando a bloquear a execução de binários maliciosos.
+* **Backups e Snapshots:** Manter snapshots e rotinas de backup em dia é uma prática básica e essencial, que funciona perfeitamente caso os dados originais sejam perdidos e não tenham sido exfiltrados.
+* **Firewall e Sandboxing:** O uso de firewalls rigorosos impede que o malware se comunique com a rede externa, enquanto o sandboxing permite a execução e análise de arquivos suspeitos em um ambiente seguro e isolado.
+* **Conscientização do Usuário:** O treinamento de usuários é a primeira linha de defesa, evitando que e-mails de phishing ou downloads maliciosos iniciem a infecção.
+* **Proteção contra Exfiltração:** Para impedir a exfiltração de dados críticos em casos de invasão, é fundamental implementar a criptografia contínua desses dados no ambiente de armazenamento. Sugere-se fortemente a criptografia preventiva de discos e bancos de dados para dificultar a leitura e exfiltração das informações por agentes maliciosos.
+
+## Conclusão
+Em um ataque de ransomware real, a dinâmica possui algumas complexidades adicionais. A chave de criptografia gerada localmente geralmente seria exfiltrada para um servidor C2 (Command and Control) sob posse do atacante. Além disso, ransomwares reais costumam buscar arquivos de extensões bem específicas e valiosas para o usuário, como `.doc`, `.xls`, `.jpeg`, entre outras. 
+
+Porém, através desta simulação educacional, já podemos ter uma ideia clara e prática de como funciona a mecânica de um ransomware sob o capô e de como podemos nos prevenir contra esse tipo de ataque
+
 # Documentação Técnica: Simulação de Keylogger e Exfiltração via C2
 
 ## 1. Escopo do Projeto
