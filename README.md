@@ -167,7 +167,7 @@ Abrindo no servidor com o Nano:
 Baixando e abrindo no Windows com o Notepad:
 
 <div align="center">
-  <img src="images/keylogger4.png" width="600px" alt="Simulação de Input" />
+  <img src="images/keylogger7.png" width="600px" alt="Simulação de Input" />
 </div>
 
 ## 2.8 Sugestões de melhoras
