@@ -5,8 +5,7 @@ import os
 def gerar_chave():
     chave = Fernet.generate_key()
     with open("chave.key", "wb") as chave_arquivo:
-        chave_arquivo.write(chave) # Corrigido: nome da variável
-
+        chave_arquivo.write(chave)
 # 2. Carregar a chave salva
 def carregar_chave():
     return open("chave.key", "rb").read()
